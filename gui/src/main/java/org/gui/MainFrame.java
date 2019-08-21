@@ -1,4 +1,4 @@
-package org.gui;
+/*package org.gui;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -19,4 +19,4 @@ public class MainFrame extends JFrame {
 	}
 	
 	
-}
+}*/
