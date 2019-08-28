@@ -9,8 +9,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,13 +21,26 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+
+
 public class MyMenu extends MenuBar {
+	
+	private Stage st1;
+	private Stage st2;
+	private Image image;
+	private ImageView imageView;
+	private File selectedFile;
+	private String localUrl;
+	
+	
 
 	public MyMenu(final Stage stage) {
 
@@ -35,8 +51,9 @@ public class MyMenu extends MenuBar {
 
 		final FileChooser fc = new FileChooser();
 
-		final Stage st1 = new Stage();
-		final Stage st2 = new Stage();
+		
+		st1 = new Stage();
+		st2 = new Stage();
 
 		final FlowPane fp = new FlowPane();
 
@@ -54,9 +71,14 @@ public class MyMenu extends MenuBar {
 		final Button b1 = new Button("Save");
 		final Button b2 = new Button("Cancel");
 
+		final Slider s1 = new Slider(100.0, 500.0, 200.0);
+		final Slider s2 = new Slider(100.0, 500.0, 200.0);
+
 		m1.getItems().add(i11);
 		m1.getItems().add(i12);
 		m2.getItems().add(i21);
+		
+		
 
 		EventHandler<ActionEvent> event1 = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
@@ -72,25 +94,82 @@ public class MyMenu extends MenuBar {
 
 		EventHandler<ActionEvent> event3 = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				final File selectedFile = fc.showOpenDialog(stage);
 				
-				String localUrl = null;
+				selectedFile = fc.showOpenDialog(stage);
+				localUrl = null;
 				try {
 					localUrl = selectedFile.toURI().toURL().toString();
 				} catch (MalformedURLException e1) {
 					e1.printStackTrace();
 				}
-				Image image = new Image(localUrl);
-				ImageView imageView = new ImageView(image);
-				fp.getChildren().addAll(b1, b2, imageView);
-				Scene scene = new Scene(fp, 400, 200);
+				
+				image = new Image(localUrl, 200, 200, false, false);
+				
+				imageView = new ImageView(image);
+				fp.getChildren().addAll(s1, s2, b1, b2);
+				fp.setPadding(new Insets(20));
+				BorderPane bp = new BorderPane(imageView, null, null, fp, null);
+				Scene scene = new Scene(bp, 600, 600);
 				st2.setScene(scene);
 				st2.show();
-
+				
+				s1.valueProperty().addListener(new ChangeListener<Number>() {
+					public void changed(ObservableValue<? extends Number> observable, //
+							Number oldValue, Number newValue) {
+						
+						image = new Image(localUrl, newValue.intValue(), newValue.intValue(), false, false);
+						
+						imageView = new ImageView(image);
+						BorderPane bp = new BorderPane(imageView, null, null, fp, null);
+						Scene scene = new Scene(bp, 600, 600);
+						st2.setScene(scene);
+						st2.show();
+						
+						
+					}
+				});
+				
+				s2.valueProperty().addListener(new ChangeListener<Number>() {/////////////////////////////////
+					public void changed(ObservableValue<? extends Number> observable, //
+							Number oldValue, Number newValue) {
+						
+						image = new Image(localUrl, newValue.intValue(), newValue.intValue(), false, false);
+						
+						
+						
+						imageView = new ImageView(image);
+						BorderPane bp = new BorderPane(imageView, null, null, fp, null);
+						Scene scene = new Scene(bp, 600, 600);
+						st2.setScene(scene);
+						st2.show();
+						
+						
+						
+					}
+				});
+				
 				EventHandler<ActionEvent> event5 = new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
-						
-						File dest = new File("C:\\Users\\User\\eclipse-workspace\\testmavenproject\\gui\\src\\main", selectedFile.getName());
+						BorderPane bp = new BorderPane(imageView, null, null, null, null);
+						stage.setScene(new Scene(bp, 600, 600));
+						stage.show();
+					}
+				};
+				b1.setOnAction(event5);
+			}
+			
+			
+		};
+				
+				
+				
+				
+				
+
+				/*EventHandler<ActionEvent> event5 = new EventHandler<ActionEvent>() {
+					public void handle(ActionEvent e) {
+						File dest = new File("C:\\Users\\User\\eclipse-workspace\\testmavenproject\\gui\\src\\main",
+								selectedFile.getName());
 						InputStream is = null;
 						OutputStream os = null;
 						try {
@@ -126,18 +205,23 @@ public class MyMenu extends MenuBar {
 							}
 						}
 					}
-				};
+				};*/
 
-				b1.setOnAction(event5);
-			}
-		};
+				
+		
 
 		EventHandler<ActionEvent> event4 = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				st2.close();
 			}
 		};
+		
+		
+		
+		
 
+		
+		
 		i21.setOnAction(event1);
 		i12.setOnAction(event2);
 		i11.setOnAction(event3);
