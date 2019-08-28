@@ -35,5 +35,6 @@
 	
   <modules>
     <module>gui</module>
+      <module>webapp</module>
   </modules>
 </project>
