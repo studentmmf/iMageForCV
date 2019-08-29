@@ -9,76 +9,31 @@ package org.plugin;
 public abstract class Plugin {
 
 
-    private final String name;
-    private final String version;
-    private final String description;
-
-    private String price;
+    /**
+     * @return The text for the menu labels for the plugin
+     */
+    public abstract String getMenuText();
 
     /**
-     * Creates a plugin object, Sets price of plugin 0.0
-     * @param name name of plugin
-     * @param version version of plugin
-     * @param description description what the plugin do
+     *
+     * @return the name of the plug in
      */
-    public Plugin(String name, String version, String description) {
-        this.name = name;
-        this.version = version;
-        this.description = description;
-    }
+    public abstract String getName();
 
     /**
-     * Creates a plugin object
-     * @param name name of plugin
-     * @param version version of plugin
-     * @param description description what the plugin do
-     * @param  price price of plugin
+     * Run plugin
      */
-    public Plugin(String name, String version, String description, String price) {
-        this.name = name;
-        this.version = version;
-        this.description = description;
-        this.price = price;
-
-    }
+    public abstract void run();
 
     /**
-     * Each plugin has called by this method.
+     * @return true if the plugin can be configured.
      */
-    public  abstract  void involke();
+    public abstract boolean isConfigurable();
 
     /**
-     * Gets name of plugin
-     * @return name of plugin
+     * Open a configuration dialogue.
      */
-    public String getName() {
-        return name;
-    }
+    public abstract void configure();
 
-    /**
-     * Gets version of plugin
-     * @return version of plugin
-     */
-    public String getVersion() {
-        return version;
-    }
-
-    /**
-     * Gets description of plugin
-     * @return what a plugin do
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Gets price of plugin.
-     * @return price of plugin or  text "free" if plugin is free for using.
-     */
-    public String getPrice() {
-        if (price.isEmpty() || price.equals("0")) {
-            return  "free";
-        }
-        return price;
-    }
+    public abstract String getPrice();
 }
