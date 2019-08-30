@@ -1,5 +1,6 @@
 package org.plugin;
 
+
 /**
  * Each plugin for iMage must extended this class. It's a connector
  * plugin of developer and systen.
@@ -8,6 +9,9 @@ package org.plugin;
  */
 public abstract class Plugin {
 
+
+
+    private PluginContext context;
 
     /**
      * @return The text for the menu labels for the plugin
@@ -35,5 +39,13 @@ public abstract class Plugin {
      */
     public abstract void configure();
 
+    public void init(PluginContext context) {
+        this.context = context;
+    }
+
     public abstract String getPrice();
+
+    public abstract String getDescription();
+
+    public abstract String getContact();
 }
