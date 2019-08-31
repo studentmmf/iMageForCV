@@ -20,7 +20,7 @@ public abstract class Plugin {
 
     /**
      *
-     * @return the name of the plug in
+     * @return The name of the plug in
      */
     public abstract String getName();
 
@@ -43,9 +43,22 @@ public abstract class Plugin {
         this.context = context;
     }
 
+    /**
+     *
+     * @return Price of plugin.
+     */
     public abstract String getPrice();
 
+    /**
+     *
+     * @return Description what the plugin do.
+     */
     public abstract String getDescription();
 
+    /**
+     *
+     * @return the contact inforamtion with author of the plugin.
+     * It may be e-mail or url of website of autor.
+     */
     public abstract String getContact();
 }
