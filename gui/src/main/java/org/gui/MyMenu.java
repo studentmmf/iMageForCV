@@ -29,10 +29,13 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import static org.gui.messages.Constants.FILE_MENU;
+import static org.gui.messages.Constants.HELP_MENU;
 
 
 public class MyMenu extends MenuBar {
-	
+
+	private final App app;
 	private Stage st1;
 	private Stage st2;
 	private Image image;
@@ -42,12 +45,12 @@ public class MyMenu extends MenuBar {
 	
 	
 
-	public MyMenu(final Stage stage) {
+	public MyMenu(App app, final Stage stage) {
 
 		super();
-
-		Menu m1 = new Menu("File");
-		Menu m2 = new Menu("Help");
+		this.app = app;
+		Menu m1 = new Menu(app.getMes().getString(FILE_MENU));
+		Menu m2 = new Menu(app.getMes().getString(HELP_MENU));
 
 		final FileChooser fc = new FileChooser();
 

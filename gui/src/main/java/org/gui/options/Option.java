@@ -1,4 +1,4 @@
-package org.gui;
+package org.gui.options;
 
 import java.io.FileInputStream;
 import java.io.IOException;
