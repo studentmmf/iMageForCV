@@ -36,7 +36,7 @@ public class App extends Application {
 
 	public App() {
 		opt = new Option();
-		mes = new Messages(Locale.ENGLISH);
+		mes = new Messages(Locale.GERMAN);
 	}
 	@Override
 	public void start(Stage stage) {
