@@ -5,7 +5,7 @@ package org.plugin;
  * Each plugin for iMage must extended this class. It's a connector
  * plugin of developer and systen.
  * @version  1.0
- * @author  Dmitry Savkin
+ *
  */
 public abstract class Plugin {
 
