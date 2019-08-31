@@ -37,9 +37,7 @@ public class MyMenu extends MenuBar {
 	private ImageView imageView;
 	private File selectedFile;
 	private String localUrl;
-	
-	
-	@Autowired
+
 	public MyMenu(App app, final Stage stage) {
 
 		super();

@@ -24,7 +24,6 @@ import java.util.Locale;
 
 import static org.gui.messages.Constants.TITLE_OF_FRAME;
 
-@Component
 public class App extends Application {
 
 	private Option opt;
