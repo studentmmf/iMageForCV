@@ -19,11 +19,15 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
+	private Option opt;
 	public static void main(String[] args) {
 
 		launch(args);
 	}
 
+	public App() {
+		opt = new Option();
+	}
 	@Override
 	public void start(Stage stage) {
 
@@ -31,7 +35,7 @@ public class App extends Application {
 		MyMenu menu = new MyMenu(stage);
 
 		VBox vbox = new VBox(menu);
-		Scene scene = new Scene(vbox, 500, 300);
+		Scene scene = new Scene(vbox, opt.width(), opt.height());
 
 		stage.setScene(scene);
 		stage.show();
