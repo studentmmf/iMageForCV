@@ -1,12 +1,6 @@
 package org.gui;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.MalformedURLException;
 
 import javafx.beans.value.ChangeListener;
@@ -28,6 +22,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.gui.messages.Constants.FILE_MENU;
 import static org.gui.messages.Constants.HELP_MENU;
@@ -44,13 +39,13 @@ public class MyMenu extends MenuBar {
 	private String localUrl;
 	
 	
-
+	@Autowired
 	public MyMenu(App app, final Stage stage) {
 
 		super();
 		this.app = app;
-		Menu m1 = new Menu(app.getMes().getString(FILE_MENU));
-		Menu m2 = new Menu(app.getMes().getString(HELP_MENU));
+		Menu m1 = new Menu(app.getMessages().getString(FILE_MENU));
+		Menu m2 = new Menu(app.getMessages().getString(HELP_MENU));
 
 		final FileChooser fc = new FileChooser();
 

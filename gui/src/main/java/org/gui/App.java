@@ -18,11 +18,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.gui.messages.Messages;
 import org.gui.options.Option;
+import org.springframework.stereotype.Component;
 
 import java.util.Locale;
 
 import static org.gui.messages.Constants.TITLE_OF_FRAME;
 
+@Component
 public class App extends Application {
 
 	private Option opt;
@@ -50,11 +52,11 @@ public class App extends Application {
 		stage.show();
 	}
 
-	public Option getOpt() {
+	public Option getOption() {
 		return opt;
 	}
 
-	public Messages getMes() {
+	public Messages getMessages() {
 		return mes;
 	}
 }
