@@ -13,7 +13,7 @@
 <body>
 <a href="">Главная</a>
 <a href="">Плагины</a>
-<form>
+<form action="login">
    Логин <input type="20"><br>
    Пароль <input type="20"><br>
     <input type="submit" value="login">
