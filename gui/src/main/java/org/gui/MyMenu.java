@@ -1,12 +1,6 @@
 package org.gui;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.MalformedURLException;
 
 import javafx.beans.value.ChangeListener;
@@ -24,23 +18,25 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-
-
 public class MyMenu extends MenuBar {
-	
+
 	private Stage st1;
 	private Stage st2;
 	private Image image;
+	private int imageHeight;
+	private int imageWidth;
 	private ImageView imageView;
 	private File selectedFile;
 	private String localUrl;
-	
-	
 
 	public MyMenu(final Stage stage) {
 
@@ -51,7 +47,6 @@ public class MyMenu extends MenuBar {
 
 		final FileChooser fc = new FileChooser();
 
-		
 		st1 = new Stage();
 		st2 = new Stage();
 
@@ -72,13 +67,11 @@ public class MyMenu extends MenuBar {
 		final Button b2 = new Button("Cancel");
 
 		final Slider s1 = new Slider(100.0, 500.0, 200.0);
-		final Slider s2 = new Slider(100.0, 500.0, 200.0);
+		final Slider s2 = new Slider(-1.0, 1.0, 0.0);
 
 		m1.getItems().add(i11);
 		m1.getItems().add(i12);
 		m2.getItems().add(i21);
-		
-		
 
 		EventHandler<ActionEvent> event1 = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
@@ -94,7 +87,7 @@ public class MyMenu extends MenuBar {
 
 		EventHandler<ActionEvent> event3 = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				
+
 				selectedFile = fc.showOpenDialog(stage);
 				localUrl = null;
 				try {
@@ -102,9 +95,9 @@ public class MyMenu extends MenuBar {
 				} catch (MalformedURLException e1) {
 					e1.printStackTrace();
 				}
-				
+
 				image = new Image(localUrl, 200, 200, false, false);
-				
+
 				imageView = new ImageView(image);
 				fp.getChildren().addAll(s1, s2, b1, b2);
 				fp.setPadding(new Insets(20));
@@ -112,121 +105,110 @@ public class MyMenu extends MenuBar {
 				Scene scene = new Scene(bp, 600, 600);
 				st2.setScene(scene);
 				st2.show();
-				
+
 				s1.valueProperty().addListener(new ChangeListener<Number>() {
 					public void changed(ObservableValue<? extends Number> observable, //
 							Number oldValue, Number newValue) {
-						
-						image = new Image(localUrl, newValue.intValue(), newValue.intValue(), false, false);
-						
-						imageView = new ImageView(image);
+
+						// image = new Image(localUrl, newValue.intValue(), newValue.intValue(), false,
+						// false);
+
+						// imageView = new ImageView(image);
+						imageHeight = newValue.intValue();
+						imageWidth = newValue.intValue();
+						imageView.setFitHeight(imageHeight);
+						imageView.setFitWidth(imageWidth);
 						BorderPane bp = new BorderPane(imageView, null, null, fp, null);
 						Scene scene = new Scene(bp, 600, 600);
 						st2.setScene(scene);
 						st2.show();
-						
-						
+
 					}
 				});
-				
+
 				s2.valueProperty().addListener(new ChangeListener<Number>() {/////////////////////////////////
 					public void changed(ObservableValue<? extends Number> observable, //
 							Number oldValue, Number newValue) {
-						
-						image = new Image(localUrl, newValue.intValue(), newValue.intValue(), false, false);
-						
-						
-						
+
+						Image image1 = new Image(localUrl, image.getHeight(), image.getWidth(), false, false);
+						int width = (int) image1.getWidth();
+						int height = (int) image1.getHeight();
+						double shift = newValue.doubleValue();
+						WritableImage wImage = new WritableImage(width, height);
+
+						PixelReader pixelReader = image1.getPixelReader();
+
+						PixelWriter writer = wImage.getPixelWriter();
+
+						for (int y = 0; y < height; y++) {
+							for (int x = 0; x < width; x++) {
+
+								Color color = pixelReader.getColor(x, y);
+								Color color1;
+								if(shift >= 0.0) {
+									color1 = new Color(Math.min((color.getRed() + shift), 1.0), Math.min((color.getGreen() + shift), 1.0), Math.min((color.getBlue() + shift), 1.0), 1.0);
+								}
+								else {
+									color1 = new Color(Math.max((color.getRed() + shift), 0.0), Math.max((color.getGreen() + shift), 0.0), Math.max((color.getBlue() + shift), 0.0), 1.0);
+								}
+								
+
+								writer.setColor(x, y, color1);
+							}
+						}
+
+						image = wImage;
+
 						imageView = new ImageView(image);
+						imageView.setFitHeight(imageHeight);
+						imageView.setFitWidth(imageWidth);
 						BorderPane bp = new BorderPane(imageView, null, null, fp, null);
 						Scene scene = new Scene(bp, 600, 600);
 						st2.setScene(scene);
 						st2.show();
-						
-						
-						
+
 					}
 				});
-				
+
 				EventHandler<ActionEvent> event5 = new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
 						BorderPane bp = new BorderPane(imageView, null, null, null, null);
 						stage.setScene(new Scene(bp, 600, 600));
 						stage.show();
+						
+						
 					}
 				};
 				b1.setOnAction(event5);
 			}
-			
-			
+
 		};
-				
-				
-				
-				
-				
 
-				/*EventHandler<ActionEvent> event5 = new EventHandler<ActionEvent>() {
-					public void handle(ActionEvent e) {
-						File dest = new File("C:\\Users\\User\\eclipse-workspace\\testmavenproject\\gui\\src\\main",
-								selectedFile.getName());
-						InputStream is = null;
-						OutputStream os = null;
-						try {
-							try {
-								is = new FileInputStream(selectedFile);
-							} catch (FileNotFoundException e1) {
-								e1.printStackTrace();
-							}
-							try {
-								os = new FileOutputStream(dest);
-							} catch (FileNotFoundException e1) {
-								e1.printStackTrace();
-							}
-							byte[] buffer = new byte[1024];
-							int length;
-							try {
-								while ((length = is.read(buffer)) > 0) {
-									os.write(buffer, 0, length);
-								}
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
-						} finally {
-							try {
-								is.close();
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
-							try {
-								os.close();
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
-						}
-					}
-				};*/
-
-				
-		
+		/*
+		 * EventHandler<ActionEvent> event5 = new EventHandler<ActionEvent>() { public
+		 * void handle(ActionEvent e) { File dest = new
+		 * File("C:\\Users\\User\\eclipse-workspace\\testmavenproject\\gui\\src\\main",
+		 * selectedFile.getName()); InputStream is = null; OutputStream os = null; try {
+		 * try { is = new FileInputStream(selectedFile); } catch (FileNotFoundException
+		 * e1) { e1.printStackTrace(); } try { os = new FileOutputStream(dest); } catch
+		 * (FileNotFoundException e1) { e1.printStackTrace(); } byte[] buffer = new
+		 * byte[1024]; int length; try { while ((length = is.read(buffer)) > 0) {
+		 * os.write(buffer, 0, length); } } catch (IOException e1) {
+		 * e1.printStackTrace(); } } finally { try { is.close(); } catch (IOException
+		 * e1) { e1.printStackTrace(); } try { os.close(); } catch (IOException e1) {
+		 * e1.printStackTrace(); } } } };
+		 */
 
 		EventHandler<ActionEvent> event4 = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				st2.close();
 			}
 		};
-		
-		
-		
-		
 
-		
-		
 		i21.setOnAction(event1);
 		i12.setOnAction(event2);
 		i11.setOnAction(event3);
 		b2.setOnAction(event4);
-		
 
 		this.getMenus().add(m1);
 		this.getMenus().add(m2);
