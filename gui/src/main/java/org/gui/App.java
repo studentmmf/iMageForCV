@@ -16,24 +16,46 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.gui.messages.Messages;
+import org.gui.options.Option;
+import org.springframework.stereotype.Component;
+
+import java.util.Locale;
+
+import static org.gui.messages.Constants.TITLE_OF_FRAME;
 
 public class App extends Application {
+
+	private Option opt;
+	private Messages mes;
 
 	public static void main(String[] args) {
 
 		launch(args);
 	}
 
+	public App() {
+		opt = new Option();
+		mes = new Messages(Locale.GERMAN);
+	}
 	@Override
 	public void start(Stage stage) {
 
-		stage.setTitle("Hello JavaFX");
-		MyMenu menu = new MyMenu(stage);
+		stage.setTitle(mes.getString(TITLE_OF_FRAME));
+		AppMenu menu = new AppMenu(this,stage);
 
 		VBox vbox = new VBox(menu);
-		Scene scene = new Scene(vbox, 500, 300);
+		Scene scene = new Scene(vbox, opt.width(), opt.height());
 
 		stage.setScene(scene);
 		stage.show();
+	}
+
+	public Option getOption() {
+		return opt;
+	}
+
+	public Messages getMessages() {
+		return mes;
 	}
 }

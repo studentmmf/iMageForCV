@@ -1,7 +1,11 @@
 package org.gui;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
+
+import javax.imageio.ImageIO;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -26,11 +30,22 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class MyMenu extends MenuBar {
+//<<<<<<< HEAD
+//public class MyMenu extends MenuBar {
 
-	private Stage st1;
-	private Stage st2;
+//=======
+import static org.gui.messages.Constants.FILE_MENU;
+import static org.gui.messages.Constants.HELP_MENU;
+
+
+public class AppMenu extends MenuBar {
+
+	private final App app;
+
+	private Stage aboutStage;
+	private Stage changeStage;
 	private Image image;
 	private int imageHeight;
 	private int imageWidth;
@@ -38,44 +53,44 @@ public class MyMenu extends MenuBar {
 	private File selectedFile;
 	private String localUrl;
 
-	public MyMenu(final Stage stage) {
+	public AppMenu(App app, final Stage stage) {
 
 		super();
-
-		Menu m1 = new Menu("File");
-		Menu m2 = new Menu("Help");
+		this.app = app;
+		Menu fileMenu = new Menu(app.getMessages().getString(FILE_MENU));
+		Menu helpMenu = new Menu(app.getMessages().getString(HELP_MENU));
 
 		final FileChooser fc = new FileChooser();
 
-		st1 = new Stage();
-		st2 = new Stage();
+		aboutStage = new Stage();
+		changeStage = new Stage();
 
 		final FlowPane fp = new FlowPane();
 
-		st1.setTitle("About");
-		st2.setTitle("Saving image");
+		aboutStage.setTitle("About");
+		changeStage.setTitle("Saving image");
 
-		st1.setHeight(200);
-		st1.setWidth(300);
-		st1.setScene(new Scene(new Group(new Label("Описание базового плагина iMage"))));
+		aboutStage.setHeight(200);
+		aboutStage.setWidth(300);
+		aboutStage.setScene(new Scene(new Group(new Label("Описание базового плагина iMage"))));
 
-		MenuItem i11 = new MenuItem("Load file");
-		MenuItem i12 = new MenuItem("Exit");
-		MenuItem i21 = new MenuItem("About");
+		MenuItem loadItem = new MenuItem("Load file");
+		MenuItem exitItem = new MenuItem("Exit");
+		MenuItem aboutItem = new MenuItem("About");
 
-		final Button b1 = new Button("Save");
-		final Button b2 = new Button("Cancel");
+		final Button saveButton = new Button("Save");
+		final Button cancelButton = new Button("Cancel");
 
-		final Slider s1 = new Slider(100.0, 500.0, 200.0);
-		final Slider s2 = new Slider(-1.0, 1.0, 0.0);
+		final Slider sizeSlider = new Slider(100.0, 500.0, 200.0);
+		final Slider brightnessSlider = new Slider(-1.0, 1.0, 0.0);
 
-		m1.getItems().add(i11);
-		m1.getItems().add(i12);
-		m2.getItems().add(i21);
+		fileMenu.getItems().add(loadItem);
+		fileMenu.getItems().add(exitItem);
+		helpMenu.getItems().add(aboutItem);
 
 		EventHandler<ActionEvent> event1 = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				st1.show();
+				aboutStage.show();
 			}
 		};
 
@@ -99,34 +114,31 @@ public class MyMenu extends MenuBar {
 				image = new Image(localUrl, 200, 200, false, false);
 
 				imageView = new ImageView(image);
-				fp.getChildren().addAll(s1, s2, b1, b2);
+				fp.getChildren().addAll(sizeSlider, brightnessSlider, saveButton, cancelButton);
 				fp.setPadding(new Insets(20));
 				BorderPane bp = new BorderPane(imageView, null, null, fp, null);
 				Scene scene = new Scene(bp, 600, 600);
-				st2.setScene(scene);
-				st2.show();
+				changeStage.setScene(scene);
+				changeStage.show();
 
-				s1.valueProperty().addListener(new ChangeListener<Number>() {
+				sizeSlider.valueProperty().addListener(new ChangeListener<Number>() {
 					public void changed(ObservableValue<? extends Number> observable, //
 							Number oldValue, Number newValue) {
 
-						// image = new Image(localUrl, newValue.intValue(), newValue.intValue(), false,
-						// false);
-
-						// imageView = new ImageView(image);
+						
 						imageHeight = newValue.intValue();
 						imageWidth = newValue.intValue();
 						imageView.setFitHeight(imageHeight);
 						imageView.setFitWidth(imageWidth);
 						BorderPane bp = new BorderPane(imageView, null, null, fp, null);
 						Scene scene = new Scene(bp, 600, 600);
-						st2.setScene(scene);
-						st2.show();
+						changeStage.setScene(scene);
+						changeStage.show();
 
 					}
 				});
 
-				s2.valueProperty().addListener(new ChangeListener<Number>() {/////////////////////////////////
+				brightnessSlider.valueProperty().addListener(new ChangeListener<Number>() {/////////////////////////////////
 					public void changed(ObservableValue<? extends Number> observable, //
 							Number oldValue, Number newValue) {
 
@@ -164,22 +176,19 @@ public class MyMenu extends MenuBar {
 						imageView.setFitWidth(imageWidth);
 						BorderPane bp = new BorderPane(imageView, null, null, fp, null);
 						Scene scene = new Scene(bp, 600, 600);
-						st2.setScene(scene);
-						st2.show();
+						changeStage.setScene(scene);
+						changeStage.show();
 
 					}
 				});
 
 				EventHandler<ActionEvent> event5 = new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent e) {
-						BorderPane bp = new BorderPane(imageView, null, null, null, null);
-						stage.setScene(new Scene(bp, 600, 600));
-						stage.show();
-						
-						
+					
+						new Paint(stage, image, imageWidth, imageHeight);
 					}
 				};
-				b1.setOnAction(event5);
+				saveButton.setOnAction(event5);
 			}
 
 		};
@@ -201,17 +210,17 @@ public class MyMenu extends MenuBar {
 
 		EventHandler<ActionEvent> event4 = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				st2.close();
+				changeStage.close();
 			}
 		};
 
-		i21.setOnAction(event1);
-		i12.setOnAction(event2);
-		i11.setOnAction(event3);
-		b2.setOnAction(event4);
+		aboutItem.setOnAction(event1);
+		exitItem.setOnAction(event2);
+		loadItem.setOnAction(event3);
+		cancelButton.setOnAction(event4);
 
-		this.getMenus().add(m1);
-		this.getMenus().add(m2);
+		this.getMenus().add(fileMenu);
+		this.getMenus().add(helpMenu);
 
 	}
 
