@@ -24,19 +24,26 @@ public class Paint {
 		fp.getChildren().addAll(rubberButton, pencilButton, textButton);
 
 		Canvas canvas = new Canvas(600, 600);
-		GraphicsContext gc;
+		final GraphicsContext gc;
 		gc = canvas.getGraphicsContext2D();
-		gc.drawImage(image, 0, 0, (double)imageWidth, (double)imageHeight);
+		gc.drawImage(image, 0, 0, (double) imageWidth, (double) imageHeight);
 		BorderPane bp = new BorderPane(canvas, fp, null, null, null);
 		stage.setScene(new Scene(bp, 800, 800));
 		stage.show();
 
 		EventHandler<ActionEvent> event1 = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				Draw rubber = new Rubber();
+				Draw rubber = new Rubber(gc, canvas);
+			}
+		};
+
+		EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent e) {
+				Draw pencil = new Pencil(gc, canvas);
 			}
 		};
 
 		rubberButton.setOnAction(event1);
+		pencilButton.setOnAction(event2);
 	}
 }

@@ -110,8 +110,9 @@ public class AppMenu extends MenuBar {
 				} catch (MalformedURLException e1) {
 					e1.printStackTrace();
 				}
-
-				image = new Image(localUrl, 200, 200, false, false);
+				imageWidth = 200;
+				imageHeight = 200;
+				image = new Image(localUrl, imageWidth, imageHeight, false, false);
 
 				imageView = new ImageView(image);
 				fp.getChildren().addAll(sizeSlider, brightnessSlider, saveButton, cancelButton);
