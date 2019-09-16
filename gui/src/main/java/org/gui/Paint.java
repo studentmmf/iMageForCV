@@ -28,22 +28,32 @@ public class Paint {
 		gc = canvas.getGraphicsContext2D();
 		gc.drawImage(image, 0, 0, (double) imageWidth, (double) imageHeight);
 		BorderPane bp = new BorderPane(canvas, fp, null, null, null);
-		stage.setScene(new Scene(bp, 800, 800));
+		stage.setScene(new Scene(bp, 700, 700));
 		stage.show();
 
 		EventHandler<ActionEvent> event1 = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				Draw rubber = new Rubber(gc, canvas);
+				Draw rubber = new Rubber();
+				rubber.draw(gc, canvas);
 			}
 		};
 
 		EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				Draw pencil = new Pencil(gc, canvas);
+				Draw pencil = new Pencil();
+				pencil.draw(gc, canvas);
+			}
+		};
+		
+		EventHandler<ActionEvent> event3 = new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent e) {
+				Text text = new Text();
+				text.drawText(gc, canvas);
 			}
 		};
 
 		rubberButton.setOnAction(event1);
 		pencilButton.setOnAction(event2);
+		textButton.setOnAction(event3);
 	}
 }

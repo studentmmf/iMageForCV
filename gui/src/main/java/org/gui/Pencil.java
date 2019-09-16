@@ -6,12 +6,11 @@ import javafx.scene.input.MouseEvent;
 
 public class Pencil implements Draw {
 
-	public Pencil(GraphicsContext gc, Canvas canvas) {
-		draw(gc, canvas);
-	}
+	
 
 	@Override
 	public void draw(GraphicsContext gc, Canvas canvas) {
+		
 		canvas.setOnMousePressed(e -> {
 
 			gc.beginPath();
