@@ -3,33 +3,23 @@ package org.gui;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 public class Text {
-	String string = "";
+	
 
-	public void drawText(GraphicsContext gc, Canvas canvas) {
-		// gc.strokeText("Hello world!", 150, 100);
+	public void drawText(GraphicsContext gc, Canvas canvas, TextArea textArea) {
+		
+		canvas.setFocusTraversable(true);
+		canvas.addEventFilter(MouseEvent.ANY, (e) -> canvas.requestFocus());
+		//canvas.addEventFilter(KeyEvent.ANY, (e) -> canvas.requestFocus());
 		canvas.setOnMouseClicked(e -> {
-			// gc.strokeText("Hello world!", 150, 100);
 			
-			canvas.setOnKeyPressed(new EventHandler<KeyEvent>() {
-				
-
-				@Override
-				public void handle(KeyEvent ke) {
-					
-					  // System.out.println( "got key pressed event");
-		            
-					gc.strokeText("Hello world!", 150, 100);
-
-					// string += ke.getText();
-					string += "bla ";
-					gc.strokeText(string, e.getX(), e.getY());
-				}
-				
+					gc.strokeText(textArea.getText(), e.getX(), e.getY());
 			});
-		});
+		
 
 	}
 }
