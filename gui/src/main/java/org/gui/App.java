@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.gui.messages.Messages;
 import org.gui.options.Option;
-import org.springframework.stereotype.Component;
+import org.gui.options.Theme;
 
 import java.util.Locale;
 
@@ -28,6 +28,7 @@ public class App extends Application {
 
 	private Option opt;
 	private Messages mes;
+	private String currentTheme;
 
 	public static void main(String[] args) {
 
@@ -37,6 +38,7 @@ public class App extends Application {
 	public App() {
 		opt = new Option();
 		mes = new Messages(Locale.GERMAN);
+		currentTheme = opt.getTheme(Theme.STANDARD);
 	}
 	@Override
 	public void start(Stage stage) {
@@ -46,7 +48,7 @@ public class App extends Application {
 
 		VBox vbox = new VBox(menu);
 		Scene scene = new Scene(vbox, opt.width(), opt.height());
-
+		scene.getStylesheets().add(currentTheme);
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -57,5 +59,9 @@ public class App extends Application {
 
 	public Messages getMessages() {
 		return mes;
+	}
+
+	public String getCurrentTheme() {
+		return currentTheme;
 	}
 }

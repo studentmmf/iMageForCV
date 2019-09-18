@@ -9,6 +9,7 @@ public class Option {
     private Properties appProps;
 
 
+
     public Option() {
         String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
         String appConfigPath = rootPath + "app.properties";
@@ -41,5 +42,9 @@ public class Option {
             ex.printStackTrace();
             return 0;
         }
+    }
+
+    public String getTheme(String theme) {
+        return "theme/" + theme + "/style.css";
     }
 }

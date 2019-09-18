@@ -79,6 +79,7 @@ public class AppMenu extends MenuBar {
 		MenuItem aboutItem = new MenuItem("About");
 
 		final Button saveButton = new Button("Save");
+		saveButton.getStyleClass().add("save-btn");
 		final Button cancelButton = new Button("Cancel");
 
 		final Slider sizeSlider = new Slider(100.0, 500.0, 200.0);
@@ -119,6 +120,8 @@ public class AppMenu extends MenuBar {
 				fp.setPadding(new Insets(20));
 				BorderPane bp = new BorderPane(imageView, null, null, fp, null);
 				Scene scene = new Scene(bp, 600, 600);
+				scene.getStylesheets().add(app.getCurrentTheme());
+
 				changeStage.setScene(scene);
 				changeStage.show();
 
