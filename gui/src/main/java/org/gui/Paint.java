@@ -1,5 +1,10 @@
 package org.gui;
 
+import org.gui.instruments.Draw;
+import org.gui.instruments.Pencil;
+import org.gui.instruments.Rubber;
+import org.gui.instruments.Text;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;

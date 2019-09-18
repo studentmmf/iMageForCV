@@ -1,9 +1,10 @@
-package org.gui;
+package org.gui.instruments;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseEvent;
 
-public class Rubber implements Draw {
+public class Pencil implements Draw {
 
 	
 
@@ -12,12 +13,17 @@ public class Rubber implements Draw {
 		
 		canvas.setOnMousePressed(e -> {
 
-			gc.clearRect(e.getX() - 2, e.getY() - 2, 4, 4);
+			gc.beginPath();
+			gc.moveTo(e.getX(), e.getY());
+			gc.stroke();
+
 		});
 
 		canvas.setOnMouseDragged(e -> {
 
-			gc.clearRect(e.getX() - 2, e.getY() - 2, 4, 4);
+			gc.lineTo(e.getX(), e.getY());
+			gc.stroke();
+
 		});
 
 	}

@@ -1,4 +1,4 @@
-package org.gui;
+package org.gui.instruments;
 
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;

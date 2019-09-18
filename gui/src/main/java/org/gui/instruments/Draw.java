@@ -1,4 +1,4 @@
-package org.gui;
+package org.gui.instruments;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
