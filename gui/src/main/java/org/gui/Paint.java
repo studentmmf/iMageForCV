@@ -1,9 +1,6 @@
 package org.gui;
 
-import org.gui.instruments.Draw;
-import org.gui.instruments.Pencil;
-import org.gui.instruments.Rubber;
-import org.gui.instruments.Text;
+import org.gui.instruments.*;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -48,15 +45,15 @@ public class Paint {
 
 		EventHandler<ActionEvent> event1 = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				Draw rubber = new Rubber();
-				rubber.draw(gc, canvas);
+			   InstrumentContainer c =  Context.getContext();
+			   c.drawRubber(gc,canvas);
 			}
 		};
 
 		EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				Draw pencil = new Pencil();
-				pencil.draw(gc, canvas);
+				InstrumentContainer c =  Context.getContext();
+				c.drawPencil(gc,canvas);
 			}
 		};
 		

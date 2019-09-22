@@ -30,12 +30,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.annotation.Autowired;
 
-//<<<<<<< HEAD
-//public class MyMenu extends MenuBar {
 
-//=======
 import static org.gui.messages.Constants.FILE_MENU;
 import static org.gui.messages.Constants.HELP_MENU;
 

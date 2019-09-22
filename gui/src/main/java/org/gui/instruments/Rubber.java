@@ -2,7 +2,9 @@ package org.gui.instruments;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Rubber implements Draw {
 
 	
