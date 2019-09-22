@@ -10,18 +10,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class InstrumentContainer {
 
-    private Draw pencil;
+    private Pencil pencil;
 
-    private Draw rubber;
+    private Rubber rubber;
 
 
     @Autowired
-    public void setPencil(Draw pencil) {
+    public void setPencil(Pencil pencil) {
         this.pencil = pencil;
     }
 
     @Autowired
-    public void setRubber(Draw rubber) {
+    public void setRubber(Rubber rubber) {
         this.rubber = rubber;
     }
 
