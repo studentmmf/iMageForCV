@@ -1,11 +1,7 @@
 package org.gui;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
-
-import javax.imageio.ImageIO;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -38,9 +34,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 //=======
 import static org.gui.messages.Constants.FILE_MENU;
 import static org.gui.messages.Constants.HELP_MENU;
-
+import static org.gui.messages.Constants.LOAD_ITEM;
+import static org.gui.messages.Constants.EXIT_ITEM;
+import static org.gui.messages.Constants.ABOUT_ITEM;
+import static org.gui.messages.Constants.CHANGING_TITLE;
+import static org.gui.messages.Constants.ABOUT_TITLE;
 
 public class AppMenu extends MenuBar {
+
 
 	private final App app;
 
@@ -67,16 +68,16 @@ public class AppMenu extends MenuBar {
 
 		final FlowPane fp = new FlowPane();
 
-		aboutStage.setTitle("About");
-		changeStage.setTitle("Saving image");
+		aboutStage.setTitle(app.getMessages().getString(ABOUT_TITLE));
+		changeStage.setTitle(app.getMessages().getString(CHANGING_TITLE));
 
 		aboutStage.setHeight(200);
 		aboutStage.setWidth(300);
 		aboutStage.setScene(new Scene(new Group(new Label("Описание базового плагина iMage"))));
 
-		MenuItem loadItem = new MenuItem("Load file");
-		MenuItem exitItem = new MenuItem("Exit");
-		MenuItem aboutItem = new MenuItem("About");
+		MenuItem loadItem = new MenuItem(app.getMessages().getString(LOAD_ITEM));		
+		MenuItem exitItem = new MenuItem(app.getMessages().getString(EXIT_ITEM));
+		MenuItem aboutItem = new MenuItem(app.getMessages().getString(ABOUT_ITEM));
 
 		final Button saveButton = new Button("Save");
 		final Button cancelButton = new Button("Cancel");
@@ -187,6 +188,7 @@ public class AppMenu extends MenuBar {
 					public void handle(ActionEvent e) {
 					
 						new Paint(stage, image, imageWidth, imageHeight);
+						changeStage.close();
 					}
 				};
 				saveButton.setOnAction(event5);
