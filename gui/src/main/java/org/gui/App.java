@@ -37,8 +37,9 @@ public class App extends Application {
 
 	public App() {
 		opt = new Option();
-		mes = new Messages(Locale.GERMAN);
 		currentTheme = opt.getTheme(Theme.STANDARD);
+		mes = new Messages(Locale.ENGLISH);
+
 	}
 	@Override
 	public void start(Stage stage) {
