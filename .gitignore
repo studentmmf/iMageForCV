@@ -1,6 +1,9 @@
 .metadata
 bin/
 tmp/
+.idea
+.idea/
+*.iml
 *.tmp
 *.bak
 *.swp
@@ -9,7 +12,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-
+*/target/
+*/target/**
 # External tool builders
 .externalToolBuilders/
 
@@ -24,6 +28,9 @@ local.properties
 
 # CDT- autotools
 .autotools
+
+.classpath
+.project
 
 # Java annotation processor (APT)
 .factorypath
@@ -53,3 +60,5 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
+
+

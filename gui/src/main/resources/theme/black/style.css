@@ -1,0 +1,8 @@
+* {
+    -fx-text-fill:white;
+}
+.root,
+.menu-bar {
+    -fx-background-color: #383838;
+
+}
