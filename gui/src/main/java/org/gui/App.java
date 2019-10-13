@@ -37,7 +37,7 @@ public class App extends Application {
 
 	public App() {
 		opt = new Option();
-		currentTheme = opt.getTheme(Theme.STANDARD);
+		currentTheme = opt.getTheme(Theme.BLACK);
 		mes = new Messages(Locale.ENGLISH);
 
 	}
