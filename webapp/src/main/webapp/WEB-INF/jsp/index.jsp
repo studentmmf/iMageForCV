@@ -21,11 +21,11 @@
 <div>${message}</div>
 
 
-<form:form method="get" modelAttribute="userJSP" action="login">
-   Логин <form:input type="text" path="login"/><br/>
-   Пароль <form:input type="password" path="password"/><br/>
+<form method="get" action="login">
+   Логин <input required type="text" name="login"/><br/>
+   Пароль <input required type="password" name="password"/><br/>
     <input type="submit" value="login"/>
-</form:form>
+</form>
 <a href="">Забыли пароль?</a>
 </body>
 </html>
