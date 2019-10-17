@@ -15,9 +15,9 @@
     <title>Авторизация</title>
 </head>
 <body>
-<a href="http://localhost:8080/webapp/auth/mainProc">Главная</a>
+<a href="http://localhost:8080/webapp/mainProc">Главная</a>
 <a href="">Плагины</a>
-<a href="http://localhost:8080/webapp/auth/showReg">Зарегистрироваться</a>
+<a href="http://localhost:8080/webapp/showReg">Зарегистрироваться</a>
 <div>${message}</div>
 
 

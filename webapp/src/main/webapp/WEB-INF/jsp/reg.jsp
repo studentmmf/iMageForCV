@@ -9,7 +9,7 @@
 <title>Регистрация</title>
 </head>
 <body>
-<a href="http://localhost:8080/webapp/auth/mainProc">Главная</a>
+<a href="http://localhost:8080/webapp/mainProc">Главная</a>
 <a href="">Плагины</a>
 <div>${message}</div>
 <form:form method="get" modelAttribute="userReg" action="registration">

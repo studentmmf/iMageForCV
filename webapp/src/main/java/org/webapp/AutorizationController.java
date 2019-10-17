@@ -69,12 +69,12 @@ public class AutorizationController extends HttpServlet {
 	    	User user = new User();
 	    	user.setLogin(request.getParameter("login"));
 	    	user.setPassword(request.getParameter("password"));
-	    	String login = user.getLogin();
-	    	String password = user.getPassword();
-	    	System.out.println(login + " " + password);
+	    	//String login = user.getLogin();
+	    	//String password = user.getPassword();
+	    	//System.out.println(login + " " + password);
 	    	BaseDAOImpl base = new BaseDAOImpl();
-	    	//if(base.userExists(user.getLogin()) && user.getPassword().equals(base.findPasswordByLogin(user.getLogin()))) {
-	    	if(base.userExists(login) && password.equals(base.findPasswordByLogin(login))) {
+	    	if(base.userExists(user.getLogin()) && user.getPassword().equals(base.findPasswordByLogin(user.getLogin()))) {
+	    	//if(base.userExists(login) && password.equals(base.findPasswordByLogin(login))) {
 	    		m.addAttribute("message", "Вы успешно авторизовались");
 	    		userAuth = user;
 	    		m.addAttribute("userAuth", userAuth);
@@ -125,7 +125,7 @@ public class AutorizationController extends HttpServlet {
     
     @RequestMapping("mainProc")
     public String mainProc(ModelMap m, @ModelAttribute(value="userAuth") User userAuth) {
-    	if(userAuth.getLogin() == null) {
+    	if(userAuth.getLogin() == null || userAuth.getLogin() == "") {
     		m.addAttribute("message", "Вы вошли как не зарегистрированный пользователь");
     	}
     	else {
