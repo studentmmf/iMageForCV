@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,13 +9,13 @@
 <title>Регистрация</title>
 </head>
 <body>
-<a href="">Главная</a>
+<a href="http://localhost:8080/webapp/auth/mainProc">Главная</a>
 <a href="">Плагины</a>
 <div>${message}</div>
-<form method="get" modelAttribute="userJSP" action="registration">
-   Логин <input type="text" path="login"/><br/>
-   Пароль <input type="text" path="password"/><br/>
+<form:form method="get" modelAttribute="userReg" action="registration">
+   Логин <form:input type="text" path="login"/><br/>
+   Пароль <form:input type="password" path="password"/><br/>
     <button>register</button>
-</form>
+</form:form>
 </body>
 </html>
