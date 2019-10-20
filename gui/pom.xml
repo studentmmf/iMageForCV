@@ -35,6 +35,16 @@
       <version>5.1.9.RELEASE</version>
       <scope>compile</scope>
     </dependency>
+      <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-fxml</artifactId>
+          <version>11</version>
+      </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-swing</artifactId>
+      <version>11-ea+24</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
