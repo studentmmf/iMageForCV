@@ -1,7 +1,5 @@
 package org.webapp;
 
-import java.net.http.HttpResponse;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

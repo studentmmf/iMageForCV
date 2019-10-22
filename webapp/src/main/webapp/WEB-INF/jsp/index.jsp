@@ -17,7 +17,7 @@
 <body>
 <a href="http://localhost:8080/webapp/mainProc">Главная</a>
 <a href="">Плагины</a>
-<a href="http://localhost:8080/webapp/showReg">Зарегистрироваться</a>
+<a href="showReg">Зарегистрироваться</a>
 <div>${message}</div>
 
 
