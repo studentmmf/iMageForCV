@@ -18,6 +18,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+
 
 @Controller
 @RequestMapping(value="")
@@ -60,22 +65,30 @@ public class AutorizationController extends HttpServlet {
         return modelAndView;
     }*/
 	
-	 @RequestMapping(value = "login", method =  RequestMethod.GET)   
+	 @RequestMapping(value = "login", method =  RequestMethod.POST)
 	    public ModelAndView login(ModelMap m, HttpServletRequest request, @ModelAttribute(value="userAuth") User userAuth) {
 	    	ModelAndView modelAndView = new ModelAndView();
 	    	modelAndView.setViewName("index");   
-	    	User user = new User();
-	    	user.setLogin(request.getParameter("login"));
-	    	user.setPassword(request.getParameter("password"));
-	    	//String login = user.getLogin();
-	    	//String password = user.getPassword();
-	    	//System.out.println(login + " " + password);
+	    	String login = request.getParameter("login");
+	    	String password = request.getParameter("password");
 	    	BaseDAOImpl base = new BaseDAOImpl();
+	    	if (base.userExists(login)) {
+	    		User user = base.findUserByLogin(login);
+				System.out.println(user);
+				String salt = user.getSalt();
+				String securityPassword = get_SHA_512_SecurePassword(password, salt);
+				if (user.getPassword().equals(securityPassword)) {
+					m.addAttribute("message", "Вы успешно авторизовались");
+					userAuth = user;
+					m.addAttribute("userAuth", userAuth);
+
+				}
+
+	    	}
+	    	/*
 	    	if(base.userExists(user.getLogin()) && user.getPassword().equals(base.findPasswordByLogin(user.getLogin()))) {
 	    	//if(base.userExists(login) && password.equals(base.findPasswordByLogin(login))) {
-	    		m.addAttribute("message", "Вы успешно авторизовались");
-	    		userAuth = user;
-	    		m.addAttribute("userAuth", userAuth);
+
 	    	}
 	    	
 	    	else if(!base.userExists(user.getLogin())) {
@@ -86,6 +99,7 @@ public class AutorizationController extends HttpServlet {
 	    	else if(base.userExists(user.getLogin()) && !user.getPassword().equals(base.findPasswordByLogin(user.getLogin()))) {
 	    		m.addAttribute("message", "Вы ввели неверный пароль");
 	    	}
+	    	*/
 	        return modelAndView;
 	    }
     
@@ -96,23 +110,30 @@ public class AutorizationController extends HttpServlet {
 		return "reg";		
 	}
 
-    @RequestMapping(value="registration", method =  RequestMethod.GET)
+    @RequestMapping(value="registration", method =  RequestMethod.POST)
     public ModelAndView registration(ModelMap m, @ModelAttribute(value="userReg") User user, @ModelAttribute(value="userAuth") User userAuth) {
     	ModelAndView modelAndView = new ModelAndView();
-    	modelAndView.setViewName("reg");
-    	BaseDAOImpl base = new BaseDAOImpl();
-    	if(base.userExists(user.getLogin())) {
-    		m.addAttribute("message", "Пользователь с данным логином уже существует");
-    	}
-    	else if(user.getLogin() != "" && user.getPassword() != ""){
-    		base.save(user);
-    		m.addAttribute("message", "Вы успешно зарегистрировались");
-    		userAuth = user;
-    		m.addAttribute("userAuth", userAuth);
-    	}
-    	else {
-    		m.addAttribute("message", "Вы не ввели логин или пароль");
-    	}
+		try {
+			modelAndView.setViewName("reg");
+			BaseDAOImpl base = new BaseDAOImpl();
+			String salt = new String(getSalt());
+			user.setSalt(salt);
+			user.setPassword(get_SHA_512_SecurePassword(user.getPassword(), salt));
+			if(base.userExists(user.getLogin())) {
+				m.addAttribute("message", "Пользователь с данным логином уже существует");
+			}
+			else if(user.getLogin() != "" && user.getPassword() != ""){
+				base.save(user);
+				m.addAttribute("message", "Вы успешно зарегистрировались");
+				userAuth = user;
+				m.addAttribute("userAuth", userAuth);
+			}
+			else {
+				m.addAttribute("message", "Вы не ввели логин или пароль");
+			}
+			} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
         return modelAndView;
     }
 
@@ -132,6 +153,33 @@ public class AutorizationController extends HttpServlet {
     	
     	return "main";
     }
-    
+
+
+	private static String get_SHA_512_SecurePassword(String passwordToHash, String salt){
+		String generatedPassword = null;
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA-512");
+			md.update(salt.getBytes(StandardCharsets.UTF_8));
+			byte[] bytes = md.digest(passwordToHash.getBytes(StandardCharsets.UTF_8));
+			StringBuilder sb = new StringBuilder();
+			for(int i=0; i< bytes.length ;i++){
+				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			generatedPassword = sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return generatedPassword;
+	}
+
+
+
+	private static byte[] getSalt() throws NoSuchAlgorithmException
+	{
+		SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+		byte[] salt = new byte[16];
+		sr.nextBytes(salt);
+		return salt;
+	}
     
 }

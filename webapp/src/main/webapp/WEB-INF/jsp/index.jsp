@@ -21,7 +21,7 @@
 <div>${message}</div>
 
 
-<form method="get" action="login">
+<form method="POST" action="login">
    Логин <input required type="text" name="login"/><br/>
    Пароль <input required type="password" name="password"/><br/>
     <input type="submit" value="login"/>

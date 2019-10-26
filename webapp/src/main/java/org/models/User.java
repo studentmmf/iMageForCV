@@ -20,8 +20,11 @@ public class User {
     private long id;
     
     private String login;
+
     private String password;
-    
+
+    private  String salt;
+
     public User() {
     	
     }
@@ -53,13 +56,23 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-    
-    @Override 
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	@Override
     public String toString() {
 		return "models.User{" +
-                "id_user=" + id +
-                ", login='" + login + '\'' +
-                ", password=" + password +
+                "\n  id_user=" + id +
+                ",\n  login='" + login + '\'' +
+                ",\n   password=" + password +
+				",\n   salt=" + salt +
+
                 '}';
     	
     }

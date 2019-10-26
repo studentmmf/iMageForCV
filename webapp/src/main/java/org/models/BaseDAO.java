@@ -4,8 +4,10 @@ import java.util.List;
 
 public interface BaseDAO {
 
+
 	public User findUserById(long id);
-	
+
+	User findUserByLogin(String login);
 	
 	
 	public void save(User user);

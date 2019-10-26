@@ -26,6 +26,27 @@ public class BaseDAOImpl implements BaseDAO {
 	}
 
 	@Override
+	public User findUserByLogin(String login) {
+		Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<User> criteria = builder.createQuery(User.class);
+		Root<User> c = criteria.from(User.class);
+		criteria.select(c);
+		criteria.where(builder.equal(c.get("login"), login));
+		Query<User> query = session.createQuery(criteria);
+		List<User> results = query.getResultList();
+		//User result = query.getSingleResult();
+		session.close();
+		if(!results.isEmpty()) {
+			return results.get(0);
+		}
+		else {
+			return null;
+		}
+
+	}
+
+	@Override
 	public void save(User user) {
 		
 		Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
