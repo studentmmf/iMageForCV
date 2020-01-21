@@ -65,7 +65,7 @@ public class AutorizationController extends HttpServlet {
         return modelAndView;
     }*/
 	
-	 @RequestMapping(value = "login", method =  RequestMethod.POST)
+	 @RequestMapping(value = "login", method =  RequestMethod.GET)
 	    public ModelAndView login(ModelMap m, HttpServletRequest request, @ModelAttribute(value="userAuth") User userAuth) {
 	    	ModelAndView modelAndView = new ModelAndView();
 	    	modelAndView.setViewName("index");   
@@ -110,7 +110,7 @@ public class AutorizationController extends HttpServlet {
 		return "reg";		
 	}
 
-    @RequestMapping(value="registration", method =  RequestMethod.POST)
+    @RequestMapping(value="registration", method =  RequestMethod.GET)
     public ModelAndView registration(ModelMap m, @ModelAttribute(value="userReg") User user, @ModelAttribute(value="userAuth") User userAuth) {
     	ModelAndView modelAndView = new ModelAndView();
 		try {

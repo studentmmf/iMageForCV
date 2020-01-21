@@ -10,9 +10,10 @@
 </head>
 <body>
 <a href="http://localhost:8080/webapp/mainProc">Главная</a>
-<a href="">Плагины</a>
+<a href=#>Плагины</a>
+<a href="">Авторизация</a>
 <div>${message}</div>
-<form:form method="POST" modelAttribute="userReg" action="registration">
+<form:form method="GET" modelAttribute="userReg" action="registration">
    Логин <form:input type="text" path="login"/><br/>
    Пароль <form:input type="password" path="password"/><br/>
     <button>register</button>

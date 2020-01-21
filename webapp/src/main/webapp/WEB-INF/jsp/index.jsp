@@ -16,17 +16,17 @@
 </head>
 <body>
 <a href="http://localhost:8080/webapp/mainProc">Главная</a>
-<a href="">Плагины</a>
-<a href="showReg">Зарегистрироваться</a>
+<a href=#>Плагины</a>
+<a href="http://localhost:8080/webapp/showReg">Зарегистрироваться</a>
 <div>${message}</div>
 
 
-<form method="POST" action="login">
+<form method="GET" action="login">
    Логин <input required type="text" name="login"/><br/>
    Пароль <input required type="password" name="password"/><br/>
     <input type="submit" value="login"/>
 </form>
-<a href="">Забыли пароль?</a>
+<a href=#>Забыли пароль?</a>
 </body>
 </html>
 
