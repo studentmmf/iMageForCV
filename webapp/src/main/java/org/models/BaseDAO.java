@@ -1,7 +1,5 @@
 package org.models;
 
-import java.util.List;
-
 public interface BaseDAO {
 
 

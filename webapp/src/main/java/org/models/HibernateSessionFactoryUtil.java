@@ -5,8 +5,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.models.User;
 
-import java.io.InputStream;
-
 public class HibernateSessionFactoryUtil {
 
 	private static SessionFactory sessionFactory;

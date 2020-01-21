@@ -7,14 +7,10 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
-
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
 public class BaseDAOImpl implements BaseDAO {
@@ -35,7 +31,7 @@ public class BaseDAOImpl implements BaseDAO {
 		criteria.where(builder.equal(c.get("login"), login));
 		Query<User> query = session.createQuery(criteria);
 		List<User> results = query.getResultList();
-		//User result = query.getSingleResult();
+		
 		session.close();
 		if(!results.isEmpty()) {
 			return results.get(0);
@@ -67,7 +63,7 @@ public class BaseDAOImpl implements BaseDAO {
 		criteria.where(builder.equal(c.get("login"), login));
 		Query<User> query = session.createQuery(criteria);
 		List<User> results = query.getResultList();
-		//User result = query.getSingleResult();
+		
         session.close();
         if(!results.isEmpty()) {
         	return results.get(0).getPassword();
@@ -110,7 +106,7 @@ public class BaseDAOImpl implements BaseDAO {
 		criteria.where(builder.equal(c.get("login"), login));
 		Query<User> query = session.createQuery(criteria);
 		List<User> results = query.getResultList();
-		//User result = query.getSingleResult();
+		
         session.close();
         if(results.isEmpty()) {
         	return false;

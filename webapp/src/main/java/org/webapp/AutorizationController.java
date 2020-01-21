@@ -1,8 +1,12 @@
 package org.webapp;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.models.BaseDAOImpl;
 import org.models.User;
@@ -12,16 +16,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 
 @Controller
@@ -35,35 +31,7 @@ public class AutorizationController extends HttpServlet {
 	        return new User();
 	}
 	
-	/*@RequestMapping(value="showAuth", method = RequestMethod.GET)
-	public String showAuth(Model m) {
-		User user = new User();
-		m.addAttribute("userJSP", user);
-		return "index";		
-	}
 	
-    @RequestMapping(value = "login", method =  RequestMethod.GET)   
-    public ModelAndView login(ModelMap m, @ModelAttribute(value="userJSP") User user, @ModelAttribute(value="userAuth") User userAuth) {
-    	ModelAndView modelAndView = new ModelAndView();
-    	modelAndView.setViewName("index");   
-    	
-    	BaseDAOImpl base = new BaseDAOImpl();
-    	if(base.userExists(user.getLogin()) && user.getPassword().equals(base.findPasswordByLogin(user.getLogin()))) {
-    		m.addAttribute("message", "Вы успешно авторизовались");
-    		userAuth = user;
-    		m.addAttribute("userAuth", userAuth);
-    	}
-    	
-    	else if(!base.userExists(user.getLogin())) {
-    		m.addAttribute("message", "Пользователь с данным логином не существует");
-    		
-    	}
-    	
-    	else if(base.userExists(user.getLogin()) && !user.getPassword().equals(base.findPasswordByLogin(user.getLogin()))) {
-    		m.addAttribute("message", "Вы ввели неверный пароль");
-    	}
-        return modelAndView;
-    }*/
 	
 	 @RequestMapping(value = "login", method =  RequestMethod.GET)
 	    public ModelAndView login(ModelMap m, HttpServletRequest request, @ModelAttribute(value="userAuth") User userAuth) {
@@ -85,21 +53,7 @@ public class AutorizationController extends HttpServlet {
 				}
 
 	    	}
-	    	/*
-	    	if(base.userExists(user.getLogin()) && user.getPassword().equals(base.findPasswordByLogin(user.getLogin()))) {
-	    	//if(base.userExists(login) && password.equals(base.findPasswordByLogin(login))) {
-
-	    	}
 	    	
-	    	else if(!base.userExists(user.getLogin())) {
-	    		m.addAttribute("message", "Пользователь с данным логином не существует");
-	    		
-	    	}
-	    	
-	    	else if(base.userExists(user.getLogin()) && !user.getPassword().equals(base.findPasswordByLogin(user.getLogin()))) {
-	    		m.addAttribute("message", "Вы ввели неверный пароль");
-	    	}
-	    	*/
 	        return modelAndView;
 	    }
     

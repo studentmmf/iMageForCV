@@ -14,9 +14,7 @@ public class Option {
     public Option() {
         String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
         String appConfigPath = rootPath + "app.properties";
-    	//URL u = Thread.currentThread().getContextClassLoader().getResource("app.properties");
-    	//String appConfigPath = u.getPath();
-    	//String appConfigPath = "/C:/Users/User/eclipse-workspace/iMageForCV/gui/target/classes/app.properties";
+  
         System.out.println(appConfigPath);
         appProps = new Properties();
         try {

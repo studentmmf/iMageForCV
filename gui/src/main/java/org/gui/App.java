@@ -1,15 +1,4 @@
-/*package org.gui;
 
-
-public class App 
-{
-	
-    public static void main( String[] args )
-    {
-    	MainFrame mf = new MainFrame();
-        
-    }
-}*/
 package org.gui;
 
 import javafx.application.Application;

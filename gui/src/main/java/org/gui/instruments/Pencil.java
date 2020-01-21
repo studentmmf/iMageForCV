@@ -1,9 +1,9 @@
 package org.gui.instruments;
 
+import org.springframework.stereotype.Component;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.MouseEvent;
-import org.springframework.stereotype.Component;
 
 @Component
 public class Pencil implements Draw {
